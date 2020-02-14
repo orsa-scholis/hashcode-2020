@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "lib": ["es5", "ESNext"],
+    "target": "ES2015",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "outDir": "./dist"
+  },
+  "include": ["./main.ts", "./src/**/*.ts"],
+  "files": [
+    "node_modules/@types/node/index.d.ts",
+    "node_modules/@types/inquirer/index.d.ts",
+    "node_modules/@types/glob/index.d.ts"
+  ]
+}
