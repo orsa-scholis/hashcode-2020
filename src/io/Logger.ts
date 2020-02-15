@@ -10,4 +10,10 @@ export default class Logger {
   static warning(warning: string) {
     console.log(`[WARN]: ${warning}`.yellow);
   }
+
+  static space() {
+    console.log();
+    console.log('-------------------'.gray);
+    console.log();
+  }
 }
