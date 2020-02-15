@@ -7,7 +7,7 @@ export class HashcodeFile {
 
   static glob(pattern: string): Promise<string[]> {
     return new Promise<string[]>((resolve, reject) => {
-      glob('data/*.in', (err, files) => {
+      glob(pattern, (err, files) => {
         err ? reject(err) : resolve(files);
       });
     });
