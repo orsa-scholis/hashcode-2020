@@ -2,6 +2,8 @@ import { Base } from './Base';
 import { Book } from './Book';
 
 export class Library extends Base {
+  public booksToScan: Book[] = [];
+
   constructor(
     public id: number,
     public bookCount: number,

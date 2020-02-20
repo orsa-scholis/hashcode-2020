@@ -1,4 +1,5 @@
 import { Parser } from './Parser';
+import { Outputter } from './Outputter';
 
 export class Core {
   constructor(private input: string) {}
@@ -7,7 +8,6 @@ export class Core {
     const parser = new Parser(this.input);
     const context = parser.parse();
     console.log(context);
-    context.libraries.map(lib => console.log(lib.books));
-    return 'this was computed';
+    return Outputter.convertOutput(context.libraries);
   }
 }
