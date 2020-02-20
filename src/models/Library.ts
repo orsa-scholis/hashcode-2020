@@ -3,6 +3,7 @@ import { Book } from './Book';
 
 export class Library extends Base {
   public booksToScan: Book[] = [];
+  public score = 0;
 
   constructor(
     public id: number,
