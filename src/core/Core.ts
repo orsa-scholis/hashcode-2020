@@ -25,7 +25,7 @@ export class Core {
     );
     //let usedLibraryIds = [];
     let usedLibraries: Library[] = [];
-    console.log("Start loop");
+    console.log('Start loop');
     while (T < context.deadline) {
       let max = 0;
       let maxLibrary: Library = null;
@@ -78,11 +78,10 @@ export class Core {
         */
         let result = tempMax;
 
-        library.booksToScan = tempBooks.sort((a,b) => b.score - a.score).slice(0, scannableBooksAmount);
-        result += sum(
-          library.booksToScan
-            .map(b => b.score)
-        );
+        library.booksToScan = tempBooks
+          .sort((a, b) => b.score - a.score)
+          .slice(0, scannableBooksAmount);
+        result += sum(library.booksToScan.map(b => b.score));
         //console.log(result + " points for library " + library.id);
         if (result >= max) {
           max = result;
