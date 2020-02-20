@@ -5,7 +5,9 @@ export class Core {
 
   compute() {
     const parser = new Parser(this.input);
-    console.log(parser.parse());
+    const context = parser.parse();
+    console.log(context);
+    context.libraries.map((lib) => console.log(lib.books));
     return 'this was computed';
   }
 }
