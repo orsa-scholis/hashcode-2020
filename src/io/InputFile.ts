@@ -1,5 +1,5 @@
 import { HashcodeFile } from './HashcodeFile';
-import Logger from "./Logger";
+import Logger from './Logger';
 
 export class InputFile extends HashcodeFile {
   constructor(fileName: string) {

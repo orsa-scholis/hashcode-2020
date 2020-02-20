@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "./node_modules/typescript/bin/tsc",
     "compile:watch": "node_modules/typescript/bin/tsc -w",
-    "start": "node_modules/typescript/bin/tsc && node dist/main.js"
+    "start": "node_modules/typescript/bin/tsc && node dist/main.js",
+    "pretty": "prettier --single-quote --trailing-comma=es5 --write src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,13 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "husky": "^4.2.3",
+    "prettier": "1.19.1",
     "typescript": "^3.7.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pretty"
+    }
   }
 }
