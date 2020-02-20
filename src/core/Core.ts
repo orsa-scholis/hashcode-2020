@@ -25,6 +25,7 @@ export class Core {
     );
     //let usedLibraryIds = [];
     let usedLibraries: Library[] = [];
+    console.log("Start loop");
     while (T < context.deadline) {
       let max = 0;
       let maxLibrary: Library = null;
@@ -43,7 +44,7 @@ export class Core {
         // Check second library
         let tempT = T + library.signupTime;
         let tempMax = 0;
-        //let tempMaxLibrary = null;
+        /* uncomment this if you want to use more calculation (lot more time)
         isLibraryIdUsed[library.id] = true;
         tempBooks.forEach(b => (isBookIdUsed[b.id] = true));
         for (let innerLibrary of context.libraries) {
@@ -70,17 +71,17 @@ export class Core {
             tempMax = innerResult;
             //maxLibrary = library;
           }
+          //console.log('New tempT: ' + tempT);
         }
         tempBooks.forEach(b => (isBookIdUsed[b.id] = false));
         isLibraryIdUsed[library.id] = false;
+        */
         let result = tempMax;
 
-        library.booksToScan = tempBooks;
+        library.booksToScan = tempBooks.sort((a,b) => b.score - a.score).slice(0, scannableBooksAmount);
         result += sum(
-          tempBooks
+          library.booksToScan
             .map(b => b.score)
-            .sort((a, b) => b - a)
-            .slice(0, scannableBooksAmount)
         );
         //console.log(result + " points for library " + library.id);
         if (result >= max) {
