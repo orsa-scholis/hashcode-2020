@@ -9,35 +9,49 @@ export class Parser {
   parse(): Context {
     let context = new Context();
 
-    let inputLines = this.input.split("\n");
+    let inputLines = this.input.split('\n');
     const firstLine = inputLines.shift();
-    const firstLineParts = firstLine.split(" ");
-    
+    const firstLineParts = firstLine.split(' ');
+
     const numberOfBooks = parseInt(first(firstLineParts));
     const numberOfLibraries = parseInt(firstLineParts[1]);
     context.deadline = parseInt(firstLineParts[2]);
 
     const secondLine = inputLines.shift();
-    const secondLineParts = secondLine.split(" ");
+    const secondLineParts = secondLine.split(' ');
 
     for (let bookIndex = 0; bookIndex < numberOfBooks; bookIndex++) {
       const score = parseInt(secondLineParts[bookIndex]);
       context.books.push(new Book(bookIndex, score));
     }
 
-    for (let libraryIndex = 0; libraryIndex < numberOfLibraries; libraryIndex++) {
-      const libraryInfo = inputLines.shift().split(" ").map((index) => parseInt(index));
-      const libraryBooks = inputLines.shift().split(" ").map((index) => parseInt(index));
-      
-      let books = context.books.filter((book) => {
+    for (
+      let libraryIndex = 0;
+      libraryIndex < numberOfLibraries;
+      libraryIndex++
+    ) {
+      const libraryInfo = inputLines
+        .shift()
+        .split(' ')
+        .map(index => parseInt(index));
+      const libraryBooks = inputLines
+        .shift()
+        .split(' ')
+        .map(index => parseInt(index));
+
+      let books = context.books.filter(book => {
         return libraryBooks.includes(book.id);
       });
 
       context.libraries.push(
         new Library(
-          libraryIndex, libraryInfo[0], books, libraryInfo[1], libraryInfo[2]
+          libraryIndex,
+          libraryInfo[0],
+          books,
+          libraryInfo[1],
+          libraryInfo[2]
         )
-      )
+      );
     }
 
     // TODO: Implement
