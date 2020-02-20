@@ -1,5 +1,4 @@
 import { Context } from '../models/Context';
-import { Book } from '../models/Book';
 
 export class BookDuplicateCounter {
   public static bookDuplicates(context: Context): Map<number, number> {

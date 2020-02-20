@@ -41,6 +41,6 @@ export class Library extends Base {
   }
 
   public signupTimeScore(): number {
-    return this.signupTime;
+    return 1 / this.signupTime;
   }
 }

@@ -15,6 +15,6 @@ export class Core {
     );
     let sorted = libs.sort((a, b) => b.score - a.score);
     sorted = FilterService.filterDuplicates(sorted);
-    return Outputter.convertOutput(sorted);
+    return Outputter.convertOutput(FilterService.removeEmptyShit(sorted));
   }
 }
