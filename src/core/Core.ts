@@ -9,6 +9,8 @@ export class Core {
   constructor(private input: string) {}
 
   compute() {
+    //console.log([1,2,3,4].sort((a,b) => b - a).slice(0,3));
+
     const parser = new Parser(this.input);
     const context: Context = parser.parse();
     //console.log(context);
@@ -33,12 +35,51 @@ export class Core {
         let scannableDays = context.deadline - library.signupTime - T;
         if (scannableDays <= 0) continue Inner;
 
+
+
+
+
         let scannableBooksAmount = scannableDays * library.maxScansPerDay;
         let tempBooks = library.books.filter(
           (book: Book) => !isBookIdUsed[book.id]
         );
+
+        // Check second library
+        let tempT = T + library.signupTime;
+        let tempMax = 0;
+        //let tempMaxLibrary = null;
+        isLibraryIdUsed[library.id] = true;
+        tempBooks.forEach(b => (isBookIdUsed[b.id] = true));
+        for (let innerLibrary of context.libraries) {
+          if (isLibraryIdUsed[innerLibrary.id]) continue;
+
+          let innerscannableDays = context.deadline - innerLibrary.signupTime - tempT;
+          if (innerscannableDays <= 0) continue;
+
+          let innerscannableBooksAmount = innerscannableDays * innerLibrary.maxScansPerDay;
+          let innertempBooks = innerLibrary.books.filter(
+            (book: Book) => !isBookIdUsed[book.id]
+          );
+          //innerLibrary.booksToScan = tempBooks;
+          let innerResult = sum(
+            innertempBooks
+              .map(b => b.score)
+              .sort((a, b) => b - a)
+              .slice(0, innerscannableBooksAmount)
+          );
+          //console.log(result + " points for library " + library.id);
+          if (innerResult >= tempMax) {
+            tempMax = innerResult;
+            //maxLibrary = library;
+          }
+        }
+        tempBooks.forEach(b => (isBookIdUsed[b.id] = false));
+        isLibraryIdUsed[library.id] = false;
+        let result = tempMax;
+
+
         library.booksToScan = tempBooks;
-        let result = sum(
+        result += sum(
           tempBooks
             .map(b => b.score)
             .sort((a, b) => b - a)
