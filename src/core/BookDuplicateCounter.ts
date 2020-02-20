@@ -1,18 +1,16 @@
-import { Context } from "../models/Context";
-import { Book } from "../models/Book";
+import { Context } from '../models/Context';
+import { Book } from '../models/Book';
 
-export class BookDuplicateCounter{
+export class BookDuplicateCounter {
+  public static bookDuplicates(context: Context): Map<number, number> {
+    let duplicates = new Map();
 
-    public static bookDuplicates(context: Context): Map<number, number>
-    {
-        let duplicates = new Map;
+    context.books.forEach(book => {
+      let libs = context.libraries.filter(lib => lib.books.includes(book));
 
-        context.books.forEach((book) => {
-            let libs = context.libraries.filter(lib => lib.books.includes(book));
-      
-            duplicates.set(book.id, libs.length);
-          });
+      duplicates.set(book.id, libs.length);
+    });
 
-          return duplicates;
-    }
+    return duplicates;
+  }
 }
