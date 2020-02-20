@@ -44,38 +44,6 @@ export class Core {
         // Check second library
         let tempT = T + library.signupTime;
         let tempMax = 0;
-        /* uncomment this if you want to use more calculation (lot more time)
-        isLibraryIdUsed[library.id] = true;
-        tempBooks.forEach(b => (isBookIdUsed[b.id] = true));
-        for (let innerLibrary of context.libraries) {
-          if (isLibraryIdUsed[innerLibrary.id]) continue;
-
-          let innerscannableDays =
-            context.deadline - innerLibrary.signupTime - tempT;
-          if (innerscannableDays <= 0) continue;
-
-          let innerscannableBooksAmount =
-            innerscannableDays * innerLibrary.maxScansPerDay;
-          let innertempBooks = innerLibrary.books.filter(
-            (book: Book) => !isBookIdUsed[book.id]
-          );
-          //innerLibrary.booksToScan = tempBooks;
-          let innerResult = sum(
-            innertempBooks
-              .map(b => b.score)
-              .sort((a, b) => b - a)
-              .slice(0, innerscannableBooksAmount)
-          );
-          //console.log(result + " points for library " + library.id);
-          if (innerResult >= tempMax) {
-            tempMax = innerResult;
-            //maxLibrary = library;
-          }
-          //console.log('New tempT: ' + tempT);
-        }
-        tempBooks.forEach(b => (isBookIdUsed[b.id] = false));
-        isLibraryIdUsed[library.id] = false;
-        */
         let result = tempMax;
 
         library.booksToScan = tempBooks
