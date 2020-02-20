@@ -5,8 +5,7 @@ import { FilterService } from './FilterService';
 import { LibraryStatistics } from './LibraryStatistics';
 
 export class Core {
-  constructor(private input: string) {
-  }
+  constructor(private input: string) {}
 
   compute() {
     const parser = new Parser(this.input);
@@ -17,8 +16,8 @@ export class Core {
       library.calculateScore(duplicates, signupAverage)
     );
     let sorted = libs.sort((a, b) => b.score - a.score);
+    console.log(libs.map(lib => lib.score));
     sorted = FilterService.filterDuplicates(sorted);
-    console.log(sorted.map(lib => lib.score));
     return Outputter.convertOutput(FilterService.removeEmptyShit(sorted));
   }
 }

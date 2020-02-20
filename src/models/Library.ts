@@ -2,11 +2,10 @@ import { Base } from './Base';
 import { Book } from './Book';
 import { sumBy, sum } from 'lodash';
 
-const SIGNUP_FACTOR = 100;
-const PENALTY_FACTOR = 1;
-const RATE_PER_DAY_FACTOR = 1;
+const SIGNUP_FACTOR = 5;
+const PENALTY_FACTOR = 2;
+const RATE_PER_DAY_FACTOR = 60;
 export class Library extends Base {
-
   public booksToScan: Book[] = [];
   public score: number;
 
@@ -20,11 +19,14 @@ export class Library extends Base {
     super();
   }
 
-  public calculateScore(duplicates: Map<number, number>, averageSignUpTime: number): Library {
+  public calculateScore(
+    duplicates: Map<number, number>,
+    averageSignUpTime: number
+  ): Library {
     this.score =
-      (this.signupTimeScore(averageSignUpTime) * SIGNUP_FACTOR) +
-      (this.scoreRatePerDay() * RATE_PER_DAY_FACTOR) -
-      (this.duplicatesPenalty(duplicates) * PENALTY_FACTOR);
+      this.signupTimeScore(averageSignUpTime) * SIGNUP_FACTOR +
+      this.scoreRatePerDay() * RATE_PER_DAY_FACTOR -
+      this.duplicatesPenalty(duplicates) * PENALTY_FACTOR;
 
     this.booksToScan = this.books;
 
