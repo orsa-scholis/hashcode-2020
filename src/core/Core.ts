@@ -35,10 +35,6 @@ export class Core {
         let scannableDays = context.deadline - library.signupTime - T;
         if (scannableDays <= 0) continue Inner;
 
-
-
-
-
         let scannableBooksAmount = scannableDays * library.maxScansPerDay;
         let tempBooks = library.books.filter(
           (book: Book) => !isBookIdUsed[book.id]
@@ -53,10 +49,12 @@ export class Core {
         for (let innerLibrary of context.libraries) {
           if (isLibraryIdUsed[innerLibrary.id]) continue;
 
-          let innerscannableDays = context.deadline - innerLibrary.signupTime - tempT;
+          let innerscannableDays =
+            context.deadline - innerLibrary.signupTime - tempT;
           if (innerscannableDays <= 0) continue;
 
-          let innerscannableBooksAmount = innerscannableDays * innerLibrary.maxScansPerDay;
+          let innerscannableBooksAmount =
+            innerscannableDays * innerLibrary.maxScansPerDay;
           let innertempBooks = innerLibrary.books.filter(
             (book: Book) => !isBookIdUsed[book.id]
           );
@@ -76,7 +74,6 @@ export class Core {
         tempBooks.forEach(b => (isBookIdUsed[b.id] = false));
         isLibraryIdUsed[library.id] = false;
         let result = tempMax;
-
 
         library.booksToScan = tempBooks;
         result += sum(
