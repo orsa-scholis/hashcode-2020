@@ -8,17 +8,45 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
+
+	"github.com/manifoldco/promptui"
 )
 
 func main() {
 	files := []string{"a_example.txt", "b_read_on.txt", "c_incunabula.txt", "d_tough_choices.txt", "e_so_many_books.txt", "f_libraries_of_the_world.txt"}
-	doAlgorithm(getContextFromFile(files[2]))
+	allFiles := "All files"
+
+	prompt := promptui.Select{
+		Label: "Select File(s)",
+		Items: append([]string{allFiles}, files...),
+	}
+
+	_, result, err := prompt.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return
+	}
+
+	var wg sync.WaitGroup
+	if result == allFiles {
+		wg.Add(len(files))
+		for _, file := range files  {
+			go doAlgorithm(getContextFromFile(file), wg)
+		}
+	} else {
+		wg.Add(1)
+		go doAlgorithm(getContextFromFile(result), wg)
+	}
+	wg.Wait()
+	//doAlgorithm(getContextFromFile(files[2]))
 
 	// idea for d: sort by amount of books per library and just send all books from top library
 }
 
 
-func doAlgorithm(context Context) {
+func doAlgorithm(context Context, wg sync.WaitGroup) {
 	//if context.outputFilename == "d_tough_choices" {
 	//	sort.Slice(context.libraries, func(i, j int) bool {
 	//		return context.libraries[i].bookAmount > context.libraries[j].bookAmount
@@ -205,6 +233,7 @@ func doAlgorithm(context Context) {
 	}
 
 	writeOutput(context.outputFilename, usedLibraries)
+	wg.Done()
 }
 
 func writeOutput(filename string, libraries []Library) {
