@@ -207,7 +207,7 @@ func doAlgorithm(context Context, wg sync.WaitGroup) {
 			isLibraryIdUsed[library.id] = false
 
 			//
-			sum := tempMax
+			sum := tempMax // De Niels stinkt
 			for _, bookId := range library.usedBookIds {
 				sum += context.bookScores[bookId]
 			}
