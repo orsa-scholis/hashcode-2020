@@ -11,9 +11,10 @@ import Foundation
 class Context: CustomStringConvertible {
   public var libs: [Library] = []
   public var signedUp: [Library] = []
-  public var deadline: Int = 0;
-  
-  init() { }
+  public var deadline: Int = 0
+  public var booksCount: Int = 0
+
+  init() {}
 
   var description: String {
     "Context(libs: \(libs), deadline: \(deadline))"

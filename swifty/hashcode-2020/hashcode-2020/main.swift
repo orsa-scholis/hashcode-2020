@@ -8,16 +8,40 @@
 
 import Foundation
 
-let name = "f_libraries_of_the_world"
+while true {
+  let basePath = "/Users/lukas/p/hashcode-2020/swifty/hashcode-2020/hashcode-2020"
 
-print("Start parsing")
-let path = "/Users/lukas/Desktop/hashcode-2020/hashcode-2020/data/\(name).in"
-let context = Parser(content: try! String(contentsOfFile: path)).parse()
-print("Parsed file")
+  let manager = FileManager.default
+  let possibleFiles: String = try! manager.contentsOfDirectory(atPath: basePath + "/data")
+                                          .map({ "- \($0.split(separator: ".").first!)" })
+                                          .joined(separator: "\n")
+  print("Available files: ")
+  print(possibleFiles)
 
-let processed = Processor(context: context).process()
-print("Processed file")
+  print("Which file to parse?")
+  guard let name = readLine() else {
+    print("Giv a file!")
+    continue;
+  }
 
-let outPath = "/Users/lukas/Desktop/hashcode-2020/hashcode-2020/out/\(name).out"
-Writer(libs: processed).write(outputPath: outPath)
-print("Wrote file")
+  let path = "\(basePath)/data/\(name).in"
+  let outPath = "\(basePath)/out/\(name).out"
+
+  if !manager.fileExists(atPath: path) {
+    print("File does not exist")
+    continue;
+  }
+
+  print("Start parsing \(path)")
+  let context = Parser(content: try! String(contentsOfFile: path)).parse()
+  print("... Parsed file")
+
+  print("Start processing")
+  let processed = Processor(context: context).process()
+  print("...Processed file")
+
+  Writer(libs: processed).write(outputPath: outPath)
+  print("Wrote file")
+
+  break;
+}

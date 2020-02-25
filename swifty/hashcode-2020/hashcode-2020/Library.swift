@@ -12,6 +12,10 @@ struct Library {
   var shipmentRate: Int
   var scannableBookIds: Set<Int> = Set()
 
+  var scanProcessDuration: Int {
+    signup + Int(ceilf(Float(books.count) / Float(shipmentRate)))
+  }
+
   mutating func scanBook(id: Int) {
     scannableBookIds.insert(id)
   }
@@ -21,10 +25,26 @@ struct Library {
   }
 
   func summedScore() -> Int {
-    books.map { $0.score }.reduce(into: 0, { $0 + $1 })
+    books.map { $0.score }.reduce(into: 0) { $0 += $1 }
   }
 
   func availableBookIds() -> [Int] {
     books.sorted(by: { $0.score > $1.score }).map({ $0.id })
+  }
+
+  var overviewDescription: String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+
+    return """
+    Library(
+      id: \(id), 
+      booksCount: \(books.count), 
+      signup: \(signup), 
+      shipmentRate: \(shipmentRate),
+      summedScore: \(formatter.string(for: summedScore())!),
+      scanProcessDuration: \(scanProcessDuration)
+    )
+    """
   }
 }

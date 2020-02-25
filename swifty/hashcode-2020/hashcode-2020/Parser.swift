@@ -19,7 +19,9 @@ class Parser {
   func parse() -> Context {
     let context = Context()
 
-    context.deadline = splitLine(line: content.first!)[2]
+    let contextMeta = splitLine(line: content.first!)
+    context.booksCount = contextMeta[0]
+    context.deadline = contextMeta[2]
     splitLine(line: content[1]).enumerated().forEach { index, score in availableBooks[index] = score }
 
     for i in stride(from: 2, to: content.count, by: 2) {
