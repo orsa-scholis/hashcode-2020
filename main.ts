@@ -35,10 +35,10 @@ class Hashcode2020 {
   };
 
   async run() {
-    const computationLabel = `Compute "${this.fileName}"`;
+    const computationLabel = `[TIME]: Compute "${this.fileName}"`;
     console.time(computationLabel);
     const input = await this.read();
-    this.write(new Core(input).compute());
+    this.write(new Core(input, this.fileName).compute());
     console.timeEnd(computationLabel);
 
     if (this.options.printCompletion) {

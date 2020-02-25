@@ -4,7 +4,7 @@ import { Book } from '../models/Book';
 import { Library } from '../models/Library';
 
 export class Parser {
-  constructor(private input: string) {}
+  constructor(private input: string) { }
 
   parse(): Context {
     let context = new Context();
@@ -25,11 +25,7 @@ export class Parser {
       context.books.push(new Book(bookIndex, score));
     }
 
-    for (
-      let libraryIndex = 0;
-      libraryIndex < numberOfLibraries;
-      libraryIndex++
-    ) {
+    for (let libraryIndex = 0; libraryIndex < numberOfLibraries; libraryIndex++) {
       const libraryInfo = inputLines
         .shift()
         .split(' ')
@@ -39,8 +35,8 @@ export class Parser {
         .split(' ')
         .map(index => parseInt(index));
 
-      let books = context.books.filter(book => {
-        return libraryBooks.includes(book.id);
+      let books = libraryBooks.map(bookId => {
+        return context.books[bookId];
       });
 
       context.libraries.push(
