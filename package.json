@@ -28,7 +28,7 @@
     "colors": "^1.4.0",
     "glob": "^7.1.6",
     "inquirer": "^7.0.4",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "husky": "^4.2.3",
